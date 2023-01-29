@@ -1,10 +1,12 @@
 import json
 import typing
 
+import requests
 import uvicorn
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, UploadFile
 from starlette.responses import JSONResponse
 
+from app.utils import lat_long_to_lambert93
 
 
 class NewJsonResponse(JSONResponse):
@@ -32,6 +34,34 @@ app = FastAPI(
 
 router = APIRouter()
 
+
+@router.get("/network/coverage")
+async def network_coverage(adress: str):
+    """Get network coverage by adress"""
+    if not adress:
+        raise ValueError("Adress is required")
+
+    url_data_gouv = "https://api-adresse.data.gouv.fr/search/"
+    params_data_gouv = {"q": adress, "autocomplete":0}
+    res = requests.get(url=url_data_gouv, params=params_data_gouv)
+    data_gouv_adress = res.json()
+    data_gouv_coords = data_gouv_adress.get("features")[0].get("geometry").get("coordinates")
+    lambert_coords = lat_long_to_lambert93(data_gouv_coords[0], data_gouv_coords[1])
+    return res.json()
+
+@router.get("/transform/file/lambert/wsg84")
+async def transform_file_lambert_to_wsg84(file: UploadFile):
+    """From file """
+    if not adress:
+        raise ValueError("Adress is required")
+
+    url_data_gouv = "https://api-adresse.data.gouv.fr/search/"
+    params_data_gouv = {"q": adress, "autocomplete":0}
+    res = requests.get(url=url_data_gouv, params=params_data_gouv)
+    data_gouv_adress = res.json()
+    data_gouv_coords = data_gouv_adress.get("features")[0].get("geometry").get("coordinates")
+    lambert_coords = lat_long_to_lambert93(data_gouv_coords[0], data_gouv_coords[1])
+    return res.json()
 
 @router.get("/")
 async def root():

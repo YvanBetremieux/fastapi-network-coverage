@@ -1,0 +1,11 @@
+version: "3"
+services:
+  db:
+    image: "postgres"
+    container_name: "papernest_db"
+    environment:
+      - POSTGRES_USER=papernest
+      - POSTGRES_PASSWORD=papernest
+      - POSTGRES_DB=papernest
+    ports:
+      - "54320:5432"
