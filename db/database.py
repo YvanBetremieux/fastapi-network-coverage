@@ -4,28 +4,29 @@ from functools import wraps
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 
 from dotenv import load_dotenv
 
 load_dotenv()
 
-engine = create_engine(os.getenv("DB_STRING"), pool_pre_ping=True)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Base = declarative_base()
-from sqlalchemy.orm import registry
+from sqlalchemy.orm import registry, sessionmaker
+
+engine = create_engine(os.getenv("DB_STRING"), pool_pre_ping=True)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 mapper_registry = registry()
 Base = mapper_registry.generate_base()
 
+
 def get_db():
-    """Get database session"""
-    datab = SessionLocal()
+    """Get databasease session"""
+    database = SessionLocal()
     try:
-        yield datab
+        yield database
     finally:
-        datab.close()
+        database.close()
 
 
 def db_add(func):
@@ -35,15 +36,15 @@ def db_add(func):
     """
 
     @wraps(func)
-    def add(datab, *args, **kwargs):
+    def add(database, *args, **kwargs):
         try:
-            db_object = func(datab, *args, **kwargs)
+            db_object = func(database, *args, **kwargs)
             if db_object:
-                datab.add(db_object)
-                datab.commit()
+                database.add(db_object)
+                database.commit()
         except SQLAlchemyError:
-            datab.flush()
-            datab.rollback()
+            database.flush()
+            database.rollback()
             raise
         return db_object
 
@@ -57,14 +58,14 @@ def db_commit(func):
     """
 
     @wraps(func)
-    def commit(datab, *args, **kwargs):
+    def commit(database, *args, **kwargs):
         try:
-            db_object = func(datab, *args, **kwargs)
+            db_object = func(database, *args, **kwargs)
             if db_object:
-                datab.commit()
+                database.commit()
         except SQLAlchemyError:
-            datab.flush()
-            datab.rollback()
+            database.flush()
+            database.rollback()
             raise
         return db_object
 
@@ -78,19 +79,19 @@ def db_delete(func):
     """
 
     @wraps(func)
-    def delete(datab, *args, **kwargs):
+    def delete(database, *args, **kwargs):
         try:
-            db_object = func(datab, *args, **kwargs)
+            db_object = func(database, *args, **kwargs)
             if db_object:
                 if isinstance(db_object, list):
                     for obj in db_object:
-                        datab.delete(obj)
+                        database.delete(obj)
                 else:
-                    datab.delete(db_object)
-                datab.commit()
+                    database.delete(db_object)
+                database.commit()
         except SQLAlchemyError:
-            datab.flush()
-            datab.rollback()
+            database.flush()
+            database.rollback()
             raise
         return db_object
 
