@@ -29,6 +29,7 @@ Once the 2 containers are started, navigate to <a href="http://localhost:8000/do
     ```shell
     [GET] add_data/csv
     ```
+  Make sure waiting few seconds after
 
 This endpoint is waiting a CSV file. You can find an example file to push into db in the directory
     
@@ -41,10 +42,18 @@ This endpoint is waiting a CSV file. You can find an example file to push into d
     [GET]/network/coverage
     ```
 
+---
+**_NOTE:_** If this take more than 5 seconds, that's a weird behaviour, Freezing container. (not sur why at the moment). 
+Juste relaunch 
+  ```shell
+    docker-compose up -d --build
+  ```
+---
+
 ## In addition
 * You will find in this project many others endpoints. I created them just to simulate a CRUD api. With these
   you can perform basic operations on db
-
+  
 ## Additionnal informations
 
 * You will find an additionnal file in resources folder name `` mccmnc.json``
