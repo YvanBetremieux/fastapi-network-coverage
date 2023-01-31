@@ -5,15 +5,8 @@ Models module
 import os
 
 from dotenv import load_dotenv
-from sqlalchemy import (
-    Boolean,
-    Column,
-    ForeignKey,
-    Integer,
-    Sequence,
-    String,
-    UniqueConstraint,
-)
+from sqlalchemy import (Boolean, Column, ForeignKey, Integer, Sequence, String,
+                        UniqueConstraint)
 
 from .database import Base
 

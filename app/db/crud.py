@@ -8,7 +8,8 @@ from sqlalchemy.orm import Session
 
 from app.db import models, schemas
 from app.db.database import db_add, db_delete, engine
-from app.utils import add_city_to_dataframe, csv_to_dataframe, find_operator, logger
+from app.utils import (add_city_to_dataframe, csv_to_dataframe, find_operator,
+                       logger)
 
 
 def get_operator(database: Session, code: str):

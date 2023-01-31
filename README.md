@@ -69,10 +69,12 @@ This endpoint is waiting a CSV file. You can find an example file to push into d
   I first loop over all the row and uses the orm insert, row by row, which was taking arround 40 minutes. With the to_sql method, i reduce it
   to 3 minutes.
 * This api project is an hybrid beetween classic 'rest api' and 'crud Api'
-
+* This project has passed back, isort and have a Pylint note of 10.
+* Unit Test can be improved, and should not be tested with db values. Mocking DB required
 
 ## Technical Improvements
 
+* Persist db with volume creation !! Because, here the db is erased with the image
 * Add more unit tests ! 
 * Add integrations tests ! 
 * More Typing ?
