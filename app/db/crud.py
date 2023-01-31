@@ -51,8 +51,8 @@ def create_operator(
     :param operator: operator
     :return: id of created operator
     """
-    operator_name = find_operator(operator)
-    db_operator = models.Operator(code=operator.code, name=operator_name)
+    # operator_name = find_operator(operator)
+    db_operator = models.Operator(code=operator.code, name=operator.name)
     return db_operator
 
 

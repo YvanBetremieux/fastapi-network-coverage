@@ -113,7 +113,7 @@ async def add_city(city: schemas.PydanticCityNoId, database: Session = Depends(g
     if not city:
         raise ValueError("City is required")
     try:
-        db_city = crud.get_city(database=database, city=city)
+        db_city = crud.get_city(database=database, city=city.name)
         if not db_city:
             db_city = crud.create_city(database=database, city=city)
     except Exception as exc:

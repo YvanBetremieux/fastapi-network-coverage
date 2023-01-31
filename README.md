@@ -6,7 +6,7 @@ Welcome to this project.
 ## Prerequisite
 
 * You must have docker installed on your machine
-* You must hace git account
+* You must have git account
 
 ## Setting Up application
 
@@ -18,7 +18,7 @@ Welcome to this project.
 * Navigate into the project directory and start containers with docker-compose.
     ```shell
     $ cd fastapi-network-coverage/docker
-    $ docker-compose up -d 
+    $ docker-compose up -d --build
     ```
   
 Once the 2 containers are started, navigate to <a href="http://localhost:8000/docs" target="_blank">the api url</a>
@@ -71,11 +71,17 @@ This endpoint is waiting a CSV file. You can find an example file to push into d
 * This api project is an hybrid beetween classic 'rest api' and 'crud Api'
 
 
-## Improvements
-* Network Management in a separate table if we want to get more network ?
+## Technical Improvements
+
 * Add more unit tests ! 
 * Add integrations tests ! 
 * More Typing ?
 * Using more Pydantic to improve data validation ! 
 * Generate docs using Sphinx ?
 * Lower all cities in db to match easily "by hands" ?
+
+## Functional Improvements
+
+* Network Management in a separate table if we want to get more network ?
+* Add regions with cities to be more flexible
+* Retrieve at country scope
