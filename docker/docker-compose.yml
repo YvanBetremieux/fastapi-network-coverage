@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
   db:
     image: "postgres"
@@ -7,5 +7,22 @@ services:
       - POSTGRES_USER=papernest
       - POSTGRES_PASSWORD=papernest
       - POSTGRES_DB=papernest
+    expose:
+      - "54320"
     ports:
       - "54320:5432"
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    env_file:
+      - ../.env
+    depends_on:
+      - db
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./src/:/usr/src/app/
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
