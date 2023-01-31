@@ -1,16 +1,17 @@
+"""
+Database Module
+"""
+
 import os
 from functools import wraps
 
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import registry, sessionmaker
 
 load_dotenv()
 
-
-# Base = declarative_base()
-from sqlalchemy.orm import registry, sessionmaker
 
 engine = create_engine(os.getenv("DB_STRING"), pool_pre_ping=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -20,7 +21,10 @@ Base = mapper_registry.generate_base()
 
 
 def get_db():
-    """Get databasease session"""
+    """
+    Generator to get database session
+    :return: database session
+    """
     database = SessionLocal()
     try:
         yield database
@@ -30,7 +34,6 @@ def get_db():
 
 def db_add(func):
     """Decorator for adding data.
-
     :param func: function
     """
 
@@ -52,7 +55,6 @@ def db_add(func):
 
 def db_commit(func):
     """Decorator for commiting data.
-
     :param func: function
     """
 
@@ -73,7 +75,6 @@ def db_commit(func):
 
 def db_delete(func):
     """Decorator for deleting data.
-
     :param func: function
     """
 

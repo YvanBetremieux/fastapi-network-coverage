@@ -1,4 +1,4 @@
-Welcome to this technical test.
+Welcome to this project.
 =======
 
 # This project enable you to retrieve network coverage giving a postal adress.
@@ -61,7 +61,7 @@ This endpoint is waiting a CSV file. You can find an example file to push into d
         return long, lat
   ```
   This snippet works like a charm, but tend to be deprecated in the future. I'm now using the new approch of pyproj package
-* To retreive city of the entire file (70K rows), I was first apply to each row using native pandas the previous snippet
+* To retrieve city of the entire file (70K rows), I was first apply to each row using native pandas the previous snippet
   But it took more than 8 minutes to iter overs rows. I drastically reduce this time, using first Dask package, then pandarallel wich is a bit faster
   and it reduce the time using parallelization with core cpu.
 * To populate db, I transform the original csv file into desired dataframe using pandas.
@@ -72,6 +72,10 @@ This endpoint is waiting a CSV file. You can find an example file to push into d
 
 
 ## Improvements
-* Add more unit tests
-* Add integrations tests
-* Using more Pydantic to improve data validation
+* Network Management in a separate table if we want to get more network ?
+* Add more unit tests ! 
+* Add integrations tests ! 
+* More Typing ?
+* Using more Pydantic to improve data validation ! 
+* Generate docs using Sphinx ?
+* Lower all cities in db to match easily "by hands" ?
