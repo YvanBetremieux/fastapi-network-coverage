@@ -2,7 +2,6 @@ version: "3.8"
 services:
   db:
     image: "postgres"
-    container_name: "papernest_db"
     environment:
       - POSTGRES_USER=papernest
       - POSTGRES_PASSWORD=papernest
@@ -18,7 +17,8 @@ services:
     env_file:
       - ../.env
     depends_on:
-      - db
+      db:
+        condition: service_completed_successfully
     command: bash -c "alembic upgrade head && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
       - alembic upgrade head
       -
